@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.Instant;
 import java.util.Objects;
 
 @Service
@@ -13,6 +14,8 @@ public class Pet implements IPet {
     private static final int HAPPINESS_MAX = 100;
     private static final int HEALTH_MAX = 100;
     private static final int SATIETY_MAX = 100;
+    private static final int SATIETY_DECREASE = 5;
+    private static final int SATIETY_HEALTH_DECREASE = 5;
 
     private long id;
     private String name;
@@ -20,10 +23,10 @@ public class Pet implements IPet {
     private int health;
     private int satiety;
     private int happiness;
-    private long last_time_of_event;
+    private Downtime downtime;
 
-    public long getDowntime() {
-        return System.currentTimeMillis() - this.last_time_of_event;
+    public Downtime getDowntime() {
+        return this.downtime;
     }
 
     private void increaseHappiness(int happiness) {
@@ -65,6 +68,10 @@ public class Pet implements IPet {
         int tmp_satiety = this.satiety - satiety;
         tmp_satiety = (tmp_satiety < 0) ? 0 : tmp_satiety;
 
+        if (tmp_satiety == 0) {
+            decreaseHealth(SATIETY_HEALTH_DECREASE);
+        }
+
         this.satiety = tmp_satiety;
     }
 
@@ -75,21 +82,27 @@ public class Pet implements IPet {
 
     @Override
     public long getAge() {
-        return System.currentTimeMillis() - birth_date;
+        return Instant.now().getEpochSecond() - birth_date;
     }
 
     @Override
     public void birth() {
-        this.birth_date = System.currentTimeMillis();
+        this.birth_date = Instant.now().getEpochSecond();
         this.health = 100;
         this.satiety = 100;
         this.happiness = HAPPINESS_MAX;
+        this.downtime = new Downtime(this.birth_date);
     }
 
     @Override
     public void eat(int satiety) {
         increaseSatiety(satiety);
         increaseHappiness(5);
+    }
+
+    @Override
+    public void starving() {
+        decreaseSatiety(SATIETY_DECREASE);
     }
 
     @Override
@@ -107,7 +120,7 @@ public class Pet implements IPet {
                 ", health=" + health +
                 ", satiety=" + satiety +
                 ", happiness=" + happiness +
-                ", last_time_of_visit=" + last_time_of_event +
+                ", last_time_of_visit=" + downtime +
                 '}';
     }
 
@@ -122,5 +135,35 @@ public class Pet implements IPet {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    /*
+    Время простоя животного
+     */
+    public class Downtime {
+        private long lasTimeStarvation;
+
+        public long getLasTimeStarvation() {
+            return lasTimeStarvation;
+        }
+
+        public void setLasTimeStarvation(long lasTimeStarvation) {
+            this.lasTimeStarvation = lasTimeStarvation;
+        }
+
+        public void increaseLasTimeStarvation(long timeStarvation) {
+            this.lasTimeStarvation += timeStarvation;
+        }
+
+        Downtime(long current_time) {
+            this.lasTimeStarvation = current_time;
+        }
+
+        @Override
+        public String toString() {
+            return "Downtime{" +
+                    "timeEat=" + lasTimeStarvation +
+                    '}';
+        }
     }
 }

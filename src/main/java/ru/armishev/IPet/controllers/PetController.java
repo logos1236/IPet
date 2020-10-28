@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.armishev.IPet.entity.pet.IPet;
+import ru.armishev.IPet.entity.universe.IUniverse;
 import ru.armishev.IPet.entity.user.IUser;
 
 @Controller
@@ -17,19 +18,29 @@ public class PetController {
     @Autowired
     private IUser user;
 
+    @Autowired
+    private IUniverse universe;
+
     @GetMapping("/")
-    public String add(Model model) {
-        pet.birth();
-        System.out.println(pet);
-
-
-        pet.play();
+    public String index(Model model) {
+        /*pet.play();
         System.out.println(pet);
 
         pet.eat(23);
         System.out.println(pet);
 
+        pet.birth();*/
+
+        universe.checkPet(pet);
+        System.out.println(pet);
+
+        return "pet/index.html";
+    }
+
+    @GetMapping("/create/")
+    public String create(Model model) {
         pet.birth();
+        System.out.println(pet);
 
         return "pet/index.html";
     }

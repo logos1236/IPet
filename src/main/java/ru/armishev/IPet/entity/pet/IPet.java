@@ -5,6 +5,7 @@ public interface IPet {
     long getAge();
     void birth();
     void eat(int satiety);
+    void starving();
     void play();
-    long getDowntime();
+    Pet.Downtime getDowntime();
 }
