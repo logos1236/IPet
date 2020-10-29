@@ -12,8 +12,8 @@ public interface IPet {
     void eat(int satiety);
     void starving();
 
-    void play();
-    void boring();
+    void play(int val);
+    void boring(int val);
 
     Map<Class<? extends IEvent>, Long> getEvent_time_list();
     void setEvent_time_list(Class<? extends IEvent> class_name, long time);

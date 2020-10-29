@@ -4,6 +4,7 @@ import ru.armishev.IPet.entity.pet.IPet;
 
 import java.time.Instant;
 import java.util.Map;
+import java.util.Random;
 import java.util.function.Consumer;
 
 public abstract class Event implements IEvent {
@@ -17,6 +18,9 @@ public abstract class Event implements IEvent {
         this.pet = pet;
     }
 
+    /*
+    Время последнего случившегося события
+     */
     protected long getLastTimeExec() {
         Map<Class<? extends IEvent>, Long> event_time_list = pet.getEvent_time_list();
 
@@ -31,6 +35,9 @@ public abstract class Event implements IEvent {
         return lastTimeExec;
     }
 
+    /*
+    Обновляем последнего случившегося события
+     */
     protected void increaseLastTimeExec(long time_interval) {
         Map<Class<? extends IEvent>, Long> event_time_list = pet.getEvent_time_list();
         long lastTimeExec = event_time_list.get(this.getClass());
@@ -40,12 +47,19 @@ public abstract class Event implements IEvent {
         pet.setEvent_time_list(this.getClass(), lastTimeExec);
     }
 
+    /*
+    Вероятность события произойти
+    */
+    protected abstract boolean isHappenedEvent();
+
     @Override
     public void execute(long current_time) {
         long downtime_range = current_time - getLastTimeExec();
 
         if((int)Math.floor(downtime_range/getTimeInterval()) > 0) {
-            getCons().accept(pet);
+            if (isHappenedEvent()) {
+                getCons().accept(pet);
+            }
             increaseLastTimeExec(getTimeInterval());
         }
     }

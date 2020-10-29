@@ -5,14 +5,17 @@ import ru.armishev.IPet.entity.pet.IPet;
 import java.util.Random;
 import java.util.function.Consumer;
 
-public class Starvation extends Event {
-    private int probability = 100;
-    private long timeInterval = 5;
+public class Boring extends Event  {
+    private int probability = 50;
+    private long timeInterval = 10;
     private Consumer<IPet> cons = (pet) -> {
-        pet.starving();
+        Random r = new Random();
+        int i = r.ints(0, (15 + 1)).findFirst().getAsInt();
+
+        pet.boring(i);
     };
 
-    public Starvation(IPet pet) {
+    public Boring(IPet pet) {
         super(pet);
     }
 

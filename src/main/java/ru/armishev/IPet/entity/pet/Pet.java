@@ -123,14 +123,14 @@ public class Pet implements IPet {
     }
 
     @Override
-    public void play() {
+    public void play(int val) {
         decreaseSatiety(35);
-        increaseHappiness(25);
+        increaseHappiness(val);
     }
 
     @Override
-    public void boring() {
-        decreaseHappiness(5);
+    public void boring(int val) {
+        decreaseHappiness(val);
     }
 
     @Override
