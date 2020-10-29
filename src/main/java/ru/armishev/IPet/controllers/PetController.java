@@ -37,6 +37,10 @@ public class PetController {
 
     @GetMapping("/")
     public String index(Model model) {
+        if (pet.getId() == 0) {
+            return "redirect:/";
+        }
+
         universe.timeMachine();
 
         IPetView view = new PetView(pet);
@@ -92,6 +96,7 @@ public class PetController {
 
             result.addProperty("success", true);
             result.addProperty("success_message", "Питомец успешно создан");
+            result.addProperty("redirect_url", "/pet/");
         }
 
         return result.toString();

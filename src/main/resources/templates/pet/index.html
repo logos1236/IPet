@@ -5,12 +5,17 @@
 <body>
     <script type="text/javascript" th:src="@{/dev/js/reload_page.js}"></script>
     <section id="main_section">
-        <div id="htmlPetControlPanel" th:utext="${htmlPetControlPanel}"></div>
+        <h1>Питомец</h1>
 
-        <div id="htmlPet" th:utext="${htmlPet}"></div>
+        <section id="pet_section">
+            <h2>Взаимодействовать с питомцем</h2>
+            <div id="htmlPetControlPanel" th:utext="${htmlPetControlPanel}"></div>
 
-        <div th:insert="main/index.html :: footer">
-        </div>
+            <h2>Параметры питомца</h2>
+            <div id="htmlPet" th:utext="${htmlPet}"></div>
+        </section>
     </section>
+    <div th:insert="main/index.html :: footer">
+    </div>
 </body>
 </html>

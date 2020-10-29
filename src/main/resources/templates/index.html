@@ -4,13 +4,14 @@
 </head>
 <body>
     <section id="main_section">
-        <form class='service-action-pet-create-from' action='/pet/create/' method='post'>
-            <input type="text" name="name" value="" required/>
-            <div class="service-action-pet-create-btn">Создать питомца</div>
-        </form>
+        <h1>Создание питомца</h1>
 
-        <div th:insert="main/index.html :: footer">
-        </div>
+        <form class='service-action-pet-create-from' action='/pet/create/' method='post'>
+            <input class="css-input" type="text" name="name" value="" required/>
+            <div class="service-action-pet-create-btn btn">Создать питомца</div>
+        </form>
     </section>
+    <div th:insert="main/index.html :: footer">
+    </div>
 </body>
 </html>

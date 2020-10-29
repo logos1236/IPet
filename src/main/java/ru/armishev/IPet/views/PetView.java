@@ -44,7 +44,7 @@ public class PetView implements IPetView {
         result.append("<div class='control_bar_pet'><ul>");
                 if (!PetAction.getMap().isEmpty()) {
                     for(Map.Entry<PetAction, String> entry: PetAction.getMap().entrySet()) {
-                        result.append("<li>").append("<div class='service-action-pet-btn' data-action='"+entry.getKey().name()+"'>"+entry.getValue()+"</div>").append("</li>");
+                        result.append("<li>").append("<div class='service-action-pet-btn btn' data-action='"+entry.getKey().name()+"'>"+entry.getValue()+"</div>").append("</li>");
                     }
                 }
         result.append("</ul></div>");

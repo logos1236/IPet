@@ -30,6 +30,10 @@ jQuery(document).ready(function () {
                     if (typeof data_json !== 'undefined') {
                         if (data_json.success == 1) {
                             toastr.success(data_json.success_message);
+
+                            if (data_json.redirect_url) {
+                                 window.location = data_json.redirect_url;
+                            }
                         } else {
                             toastr.error(data_json.error_message);
                         }

@@ -1,6 +1,5 @@
 $(document).ready(function () {           
     function replaceMainHtml() {
-        console.log("111111");
         $.ajax({
                         type: "POST",
                         url: "/pet/",
