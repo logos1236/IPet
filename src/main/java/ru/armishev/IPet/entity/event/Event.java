@@ -1,13 +1,10 @@
 package ru.armishev.IPet.entity.event;
 
 import ru.armishev.IPet.entity.pet.IPet;
-import ru.armishev.IPet.entity.pet.Pet;
-import ru.armishev.IPet.entity.pet.downTime.Downtime;
 
 import java.time.Instant;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public abstract class Event implements IEvent {
     protected IPet pet;

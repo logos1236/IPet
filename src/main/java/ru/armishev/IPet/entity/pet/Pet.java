@@ -4,9 +4,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
-import ru.armishev.IPet.entity.event.Event;
 import ru.armishev.IPet.entity.event.IEvent;
-import ru.armishev.IPet.entity.pet.downTime.Downtime;
 
 import java.time.Instant;
 import java.util.*;
@@ -26,6 +24,7 @@ public class Pet implements IPet {
     private int health;
     private int satiety;
     private int happiness;
+    private long last_visit_time;
 
     private Map<Class<? extends IEvent>, Long> event_time_list = new HashMap<>();
 
@@ -35,6 +34,16 @@ public class Pet implements IPet {
 
     public void setEvent_time_list(Class<? extends IEvent> class_name, long time) {
         event_time_list.put(class_name, time);
+    }
+
+    @Override
+    public long getLastVisitTime() {
+        return last_visit_time;
+    }
+
+    @Override
+    public void setLastVisitTime(long current_time) {
+        last_visit_time = current_time;
     }
 
     private void increaseHappiness(int happiness) {
@@ -99,6 +108,7 @@ public class Pet implements IPet {
         this.health = 100;
         this.satiety = 100;
         this.happiness = HAPPINESS_MAX;
+        this.last_visit_time = Instant.now().getEpochSecond();
     }
 
     @Override

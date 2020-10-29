@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.armishev.IPet.entity.event.IEvent;
 import ru.armishev.IPet.entity.event.Starvation;
 import ru.armishev.IPet.entity.pet.IPet;
 import ru.armishev.IPet.entity.universe.IUniverse;
@@ -35,8 +34,11 @@ public class PetController {
 
         pet.birth();*/
 
-        Starvation starvation = new Starvation(pet);
-        starvation.execute(Instant.now().getEpochSecond());
+        //Starvation starvation = new Starvation(pet);
+        //starvation.execute(Instant.now().getEpochSecond());
+        //System.out.println(pet);
+
+        universe.timeMachine(pet);
         System.out.println(pet);
 
         return "pet/index.html";
