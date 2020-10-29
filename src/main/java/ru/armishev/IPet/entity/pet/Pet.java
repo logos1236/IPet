@@ -4,9 +4,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
+import ru.armishev.IPet.entity.event.Event;
+import ru.armishev.IPet.entity.event.IEvent;
+import ru.armishev.IPet.entity.pet.downTime.Downtime;
 
 import java.time.Instant;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -23,10 +26,15 @@ public class Pet implements IPet {
     private int health;
     private int satiety;
     private int happiness;
-    private Downtime downtime;
 
-    public Downtime getDowntime() {
-        return this.downtime;
+    private Map<Class<? extends IEvent>, Long> event_time_list = new HashMap<>();
+
+    public Map<Class<? extends IEvent>, Long> getEvent_time_list() {
+        return event_time_list;
+    }
+
+    public void setEvent_time_list(Class<? extends IEvent> class_name, long time) {
+        event_time_list.put(class_name, time);
     }
 
     private void increaseHappiness(int happiness) {
@@ -91,7 +99,6 @@ public class Pet implements IPet {
         this.health = 100;
         this.satiety = 100;
         this.happiness = HAPPINESS_MAX;
-        this.downtime = new Downtime(this.birth_date);
     }
 
     @Override
@@ -112,6 +119,11 @@ public class Pet implements IPet {
     }
 
     @Override
+    public void boring() {
+        decreaseHappiness(5);
+    }
+
+    @Override
     public String toString() {
         return "Pet{" +
                 "id=" + id +
@@ -120,7 +132,6 @@ public class Pet implements IPet {
                 ", health=" + health +
                 ", satiety=" + satiety +
                 ", happiness=" + happiness +
-                ", last_time_of_visit=" + downtime +
                 '}';
     }
 
@@ -137,33 +148,4 @@ public class Pet implements IPet {
         return Objects.hash(id);
     }
 
-    /*
-    Время простоя животного
-     */
-    public class Downtime {
-        private long lasTimeStarvation;
-
-        public long getLasTimeStarvation() {
-            return lasTimeStarvation;
-        }
-
-        public void setLasTimeStarvation(long lasTimeStarvation) {
-            this.lasTimeStarvation = lasTimeStarvation;
-        }
-
-        public void increaseLasTimeStarvation(long timeStarvation) {
-            this.lasTimeStarvation += timeStarvation;
-        }
-
-        Downtime(long current_time) {
-            this.lasTimeStarvation = current_time;
-        }
-
-        @Override
-        public String toString() {
-            return "Downtime{" +
-                    "timeEat=" + lasTimeStarvation +
-                    '}';
-        }
-    }
 }

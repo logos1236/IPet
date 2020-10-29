@@ -1,14 +1,18 @@
 package ru.armishev.IPet.entity.universe;
 
 import org.springframework.stereotype.Service;
+import ru.armishev.IPet.entity.pet.downTime.Downtime;
+import ru.armishev.IPet.entity.pet.downTime.IDowntime;
 import ru.armishev.IPet.entity.pet.IPet;
-import ru.armishev.IPet.entity.pet.Pet;
 
 import java.time.Instant;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 @Service
 public class Universe implements IUniverse {
     private static long timeIntervalEat = 5;
+    private static long timeIntervalHappiness = 10;
 
     @Override
     public void setEvent() {
@@ -17,20 +21,9 @@ public class Universe implements IUniverse {
 
     @Override
     public void checkPet(IPet pet) {
-        checkHungry(pet);
     }
 
-    private void checkHungry(IPet pet) {
-        Pet.Downtime petDowntime = pet.getDowntime();
+    private void checkEvent(IPet pet, Predicate<IPet> pet_method, Function<IDowntime, Long> downtime_time) {
 
-        long current_time = Instant.now().getEpochSecond();
-        long donwtime_range = current_time - petDowntime.getLasTimeStarvation();
-
-        int count_of_iteration = (int)Math.floor(donwtime_range/timeIntervalEat);
-        for(int i=0; i <= count_of_iteration; i++) {
-            pet.starving();
-        }
-
-        petDowntime.increaseLasTimeStarvation(timeIntervalEat*count_of_iteration);
-    }
+    };
 }
