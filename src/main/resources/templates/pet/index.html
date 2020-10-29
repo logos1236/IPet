@@ -3,11 +3,13 @@
 <head th:insert="main/index.html :: header">
 </head>
 <body>
-    <div th:utext="${htmlPetControlPanel}"></div>
+    <section id="main_section">
+        <div id="htmlPetControlPanel" th:utext="${htmlPetControlPanel}"></div>
 
-    <div th:utext="${htmlPet}"></div>
+        <div id="htmlPet" th:utext="${htmlPet}"></div>
 
-    <div th:insert="main/index.html :: footer">
-    </div>
+        <div th:insert="main/index.html :: footer">
+        </div>
+    </section>
 </body>
 </html>

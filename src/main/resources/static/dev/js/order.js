@@ -24,21 +24,21 @@ jQuery(document).ready(function () {
                 type: _this_form.attr("method"),
                 url: _this_form.attr("action"),
                 data: data_form,
+                dataType: 'json',
                 beforeSend: function () {
                     _this_loader.addClass("loading");
                 },
                 success: function (data_json) {
-                    /*if (typeof data_json !== 'undefined') {
+                    if (typeof data_json !== 'undefined') {
                         if (data_json.success == 1) {
-                            if (data_json.redirect_url) {
-                                window.location = data_json.redirect_url;
-                            }
-
                             toastr.success(data_json.success_message);
+
+                            $("#htmlPetControlPanel").html(data_json.htmlPetControlPanel);
+                            $("#htmlPet").html(data_json.htmlPet);
                         } else {
                             toastr.success(data_json.error_message);
                         }
-                    }*/
+                    }
                 },
                 error: function () {
                     toastr.error(window.toastr_error);

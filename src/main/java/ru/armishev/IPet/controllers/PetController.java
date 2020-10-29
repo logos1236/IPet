@@ -1,5 +1,6 @@
 package ru.armishev.IPet.controllers;
 
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ru.armishev.IPet.entity.action.PetAction;
 import ru.armishev.IPet.entity.event.Starvation;
 import ru.armishev.IPet.entity.pet.IPet;
 import ru.armishev.IPet.entity.universe.IUniverse;
@@ -40,6 +42,20 @@ public class PetController {
         return "pet/index.html";
     }
 
+    @PostMapping("/")
+    @ResponseBody
+    public String indexJson() {
+        JsonObject result = new JsonObject();
+        IPetView view = new PetView(pet);
+        universe.timeMachine(pet);
+
+        result.addProperty("htmlPetControlPanel", view.getHtmlControlPanel());
+        result.addProperty("htmlPet", view.getHtml());
+
+
+        return result.toString();
+    }
+
     @GetMapping("/create/")
     public String create(Model model) {
         pet.birth();
@@ -51,25 +67,29 @@ public class PetController {
         return "pet/index.html";
     }
 
-    @PostMapping("/action/")
+    @PostMapping(value = "/action/", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String action(HttpServletRequest request, Model model) {
-        String action = request.getParameter("action");
+        IPetView view = new PetView(pet);
+        JsonObject result = new JsonObject();
+        result.addProperty("success", false);
+        result.addProperty("success_message", "Непонятная команда");
 
-        switch (action) {
-            case "feed": {
-                pet.eat(10);
-                break;
-            }
-            case "play": {
-                pet.play();
-                break;
-            }
+        String action = request.getParameter("action");
+        if (PetAction.valueOf(action).equals(PetAction.FEED)) {
+            pet.eat(10);
+            result.addProperty("success", true);
+            result.addProperty("success_message", "Успешно покормлен");
+        }
+        if (PetAction.valueOf(action).equals(PetAction.PLAY)) {
+            pet.play();
+            result.addProperty("success", true);
+            result.addProperty("success_message", "Успешно поиграл");
         }
 
-        IPetView view = new PetView(pet);
-        model.addAttribute("htmlPet", view.getHtml());
+        result.addProperty("htmlPetControlPanel", view.getHtmlControlPanel());
+        result.addProperty("htmlPet", view.getHtml());
 
-        return "pet/index.html";
+        return result.toString();
     }
 }
