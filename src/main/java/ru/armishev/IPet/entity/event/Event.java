@@ -11,8 +11,6 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@Service
-@Scope("prototype")
 public abstract class Event implements IEvent {
     protected IPet pet;
 

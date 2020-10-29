@@ -3,11 +3,10 @@
 <head th:insert="main/index.html :: header">
 </head>
 <body>
-    <script type="text/javascript" th:src="@{/dev/js/reload_page.js}"></script>
     <section id="main_section">
-        <div id="htmlPetControlPanel" th:utext="${htmlPetControlPanel}"></div>
-
-        <div id="htmlPet" th:utext="${htmlPet}"></div>
+        <form class='service-action-pet-create-from' action='/pet/create/' method='post'>
+            <div class="service-action-pet-create-btn">Создать питомца</div>
+        </form>
 
         <div th:insert="main/index.html :: footer">
         </div>

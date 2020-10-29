@@ -2,8 +2,6 @@ package ru.armishev.IPet.controllers;
 
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.armishev.IPet.dao.LogAction;
 import ru.armishev.IPet.dao.LogRepository;
 import ru.armishev.IPet.entity.action.PetAction;
-import ru.armishev.IPet.entity.event.Starvation;
 import ru.armishev.IPet.entity.pet.IPet;
 import ru.armishev.IPet.entity.universe.IUniverse;
 import ru.armishev.IPet.entity.user.IUser;
@@ -21,7 +18,6 @@ import ru.armishev.IPet.views.IPetView;
 import ru.armishev.IPet.views.PetView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.Instant;
 
 @Controller
 @RequestMapping(value = "/pet")
@@ -41,7 +37,7 @@ public class PetController {
 
     @GetMapping("/")
     public String index(Model model) {
-        universe.timeMachine(pet);
+        universe.timeMachine();
 
         IPetView view = new PetView(pet);
         model.addAttribute("htmlPet", view.getHtml());
@@ -59,7 +55,7 @@ public class PetController {
     public String indexJson() {
         JsonObject result = new JsonObject();
         IPetView view = new PetView(pet);
-        universe.timeMachine(pet);
+        universe.timeMachine();
 
         result.addProperty("htmlPetControlPanel", view.getHtmlControlPanel());
         result.addProperty("htmlPet", view.getHtml());
@@ -68,15 +64,18 @@ public class PetController {
         return result.toString();
     }
 
-    @GetMapping("/create/")
+    @PostMapping("/create/")
+    @ResponseBody
     public String create(Model model) {
+        JsonObject result = new JsonObject();
+
         pet.birth();
         pet.setName("Mailo");
 
-        IPetView view = new PetView(pet);
-        model.addAttribute("htmlPet", view.getHtml());
+        result.addProperty("success", true);
+        result.addProperty("success_message", "Питомец успешно создан");
 
-        return "pet/index.html";
+        return result.toString();
     }
 
     @PostMapping(value = "/action/", produces = "application/json; charset=utf-8")

@@ -42,6 +42,8 @@ public class LogAction {
     public String toString() {
         return "LogAction{" +
                 "id=" + id +
+                ", pet_id=" + pet_id +
+                ", timestamp=" + timestamp +
                 ", message='" + message + '\'' +
                 '}';
     }
