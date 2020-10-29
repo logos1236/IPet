@@ -9,6 +9,7 @@ public class Starvation extends Event {
     private int probability = 100;
     private long timeInterval = 5;
     private Consumer<IPet> cons = (pet) -> {
+        System.out.println("Is happened"+Starvation.class);
         pet.starving();
     };
 

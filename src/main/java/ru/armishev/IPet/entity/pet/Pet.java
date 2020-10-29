@@ -36,6 +36,10 @@ public class Pet implements IPet {
         event_time_list.put(class_name, time);
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public long getLastVisitTime() {
         return last_visit_time;
@@ -98,6 +102,11 @@ public class Pet implements IPet {
     }
 
     @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
     public long getAge() {
         return Instant.now().getEpochSecond() - birth_date;
     }
@@ -109,6 +118,21 @@ public class Pet implements IPet {
         this.satiety = 100;
         this.happiness = HAPPINESS_MAX;
         this.last_visit_time = Instant.now().getEpochSecond();
+    }
+
+    @Override
+    public int getHeath() {
+        return this.health;
+    }
+
+    @Override
+    public int getSatiety() {
+        return this.satiety;
+    }
+
+    @Override
+    public int getHappiness() {
+        return this.happiness;
     }
 
     @Override
@@ -124,13 +148,29 @@ public class Pet implements IPet {
 
     @Override
     public void play(int val) {
-        decreaseSatiety(35);
+        decreaseSatiety((int)(val*1.5));
         increaseHappiness(val);
+    }
+
+    @Override
+    public void play() {
+        Random r = new Random();
+        int rand_i = r.ints(0, (20 + 1)).findFirst().getAsInt();
+
+        play(rand_i);
     }
 
     @Override
     public void boring(int val) {
         decreaseHappiness(val);
+    }
+
+    @Override
+    public void boring() {
+        Random r = new Random();
+        int rand_i = r.ints(0, (20 + 1)).findFirst().getAsInt();
+
+        boring(rand_i);
     }
 
     @Override

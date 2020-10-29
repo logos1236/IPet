@@ -5,15 +5,23 @@ import ru.armishev.IPet.entity.event.IEvent;
 import java.util.Map;
 
 public interface IPet {
-    boolean isAlive();
-    long getAge();
     void birth();
+    boolean isAlive();
+
+    String getName();
+    void setName(String name);
+    long getAge();
+    int getHeath();
+    int getSatiety();
+    int getHappiness();
 
     void eat(int satiety);
     void starving();
 
     void play(int val);
+    void play();
     void boring(int val);
+    void boring();
 
     Map<Class<? extends IEvent>, Long> getEvent_time_list();
     void setEvent_time_list(Class<? extends IEvent> class_name, long time);

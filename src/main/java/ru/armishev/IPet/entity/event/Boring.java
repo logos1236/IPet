@@ -9,10 +9,8 @@ public class Boring extends Event  {
     private int probability = 50;
     private long timeInterval = 10;
     private Consumer<IPet> cons = (pet) -> {
-        Random r = new Random();
-        int i = r.ints(0, (15 + 1)).findFirst().getAsInt();
-
-        pet.boring(i);
+        System.out.println("Is happened"+Boring.class);
+        pet.boring();
     };
 
     public Boring(IPet pet) {

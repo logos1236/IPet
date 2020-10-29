@@ -4,12 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.armishev.IPet.entity.event.Starvation;
 import ru.armishev.IPet.entity.pet.IPet;
 import ru.armishev.IPet.entity.universe.IUniverse;
 import ru.armishev.IPet.entity.user.IUser;
+import ru.armishev.IPet.views.IPetView;
+import ru.armishev.IPet.views.PetView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 
 @Controller
@@ -26,20 +31,11 @@ public class PetController {
 
     @GetMapping("/")
     public String index(Model model) {
-        /*pet.play();
-        System.out.println(pet);
-
-        pet.eat(23);
-        System.out.println(pet);
-
-        pet.birth();*/
-
-        //Starvation starvation = new Starvation(pet);
-        //starvation.execute(Instant.now().getEpochSecond());
-        //System.out.println(pet);
-
         universe.timeMachine(pet);
-        System.out.println(pet);
+
+        IPetView view = new PetView(pet);
+        model.addAttribute("htmlPet", view.getHtml());
+        model.addAttribute("htmlPetControlPanel", view.getHtmlControlPanel());
 
         return "pet/index.html";
     }
@@ -47,7 +43,32 @@ public class PetController {
     @GetMapping("/create/")
     public String create(Model model) {
         pet.birth();
-        System.out.println(pet);
+        pet.setName("Mailo");
+
+        IPetView view = new PetView(pet);
+        model.addAttribute("htmlPet", view.getHtml());
+
+        return "pet/index.html";
+    }
+
+    @PostMapping("/action/")
+    @ResponseBody
+    public String action(HttpServletRequest request, Model model) {
+        String action = request.getParameter("action");
+
+        switch (action) {
+            case "feed": {
+                pet.eat(10);
+                break;
+            }
+            case "play": {
+                pet.play();
+                break;
+            }
+        }
+
+        IPetView view = new PetView(pet);
+        model.addAttribute("htmlPet", view.getHtml());
 
         return "pet/index.html";
     }
