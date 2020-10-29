@@ -2,12 +2,16 @@ package ru.armishev.IPet.controllers;
 
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ru.armishev.IPet.dao.LogAction;
+import ru.armishev.IPet.dao.LogRepository;
 import ru.armishev.IPet.entity.action.PetAction;
 import ru.armishev.IPet.entity.event.Starvation;
 import ru.armishev.IPet.entity.pet.IPet;
@@ -31,6 +35,10 @@ public class PetController {
     @Autowired
     private IUniverse universe;
 
+    @Autowired
+    private LogRepository repository;
+
+
     @GetMapping("/")
     public String index(Model model) {
         universe.timeMachine(pet);
@@ -38,6 +46,10 @@ public class PetController {
         IPetView view = new PetView(pet);
         model.addAttribute("htmlPet", view.getHtml());
         model.addAttribute("htmlPetControlPanel", view.getHtmlControlPanel());
+
+        for (LogAction log : repository.findAll()) {
+            System.out.println(log);
+        }
 
         return "pet/index.html";
     }

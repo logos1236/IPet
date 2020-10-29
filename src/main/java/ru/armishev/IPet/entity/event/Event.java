@@ -1,12 +1,18 @@
 package ru.armishev.IPet.entity.event;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+import ru.armishev.IPet.dao.LogRepository;
 import ru.armishev.IPet.entity.pet.IPet;
 
 import java.time.Instant;
 import java.util.Map;
-import java.util.Random;
 import java.util.function.Consumer;
 
+@Service
+@Scope("prototype")
 public abstract class Event implements IEvent {
     protected IPet pet;
 
@@ -14,13 +20,17 @@ public abstract class Event implements IEvent {
 
     protected abstract long getTimeInterval();
 
-    public Event(IPet pet) {
+    public Event() {
+        this.pet = pet;
+    }
+
+    public void setPet(IPet pet) {
         this.pet = pet;
     }
 
     /*
-    Время последнего случившегося события
-     */
+        Время последнего случившегося события
+         */
     protected long getLastTimeExec() {
         Map<Class<? extends IEvent>, Long> event_time_list = pet.getEvent_time_list();
 

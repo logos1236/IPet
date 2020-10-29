@@ -14,6 +14,7 @@ public interface IPet {
     int getHeath();
     int getSatiety();
     int getHappiness();
+    long getId();
 
     void eat(int satiety);
     void starving();

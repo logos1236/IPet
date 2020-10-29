@@ -18,14 +18,14 @@ import java.util.function.Consumer;
 
 @Service
 @Scope("prototype")
-public class Boring extends Event  {
+public class PlayAlone extends Event {
     @Autowired
     public LogRepository repository;
 
-    private int probability = 50;
-    private long timeInterval = 10;
+    private int probability = 30;
+    private long timeInterval = 5;
     private Consumer<IPet> cons = (pet) -> {
-        pet.boring();
+        pet.play(20);
 
         afterSuccessAction();
     };
@@ -49,7 +49,7 @@ public class Boring extends Event  {
 
     private void afterSuccessAction() {
         long current_time = Instant.now().getEpochSecond();
-        getLogRepository().save(new LogAction(pet.getId(), current_time, "Скучает"));
+        getLogRepository().save(new LogAction(pet.getId(), current_time, "Побегал по комнате"));
     }
 
     protected long getTimeInterval() {

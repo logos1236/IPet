@@ -1,6 +1,9 @@
 package ru.armishev.IPet.entity.universe;
 
 import java.time.Instant;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Service;
 import ru.armishev.IPet.entity.event.Boring;
 import ru.armishev.IPet.entity.event.IEvent;
@@ -9,6 +12,12 @@ import ru.armishev.IPet.entity.pet.IPet;
 
 @Service
 public class Universe implements IUniverse {
+    @Autowired
+    Starvation starvation;
+
+    @Autowired
+    Boring boring;
+
     @Override
     public void timeMachine(IPet pet) {
         long current_time = Instant.now().getEpochSecond();
@@ -20,12 +29,10 @@ public class Universe implements IUniverse {
     }
 
     private void checkPet(IPet pet, long current_time) {
-        IEvent starvation = new Starvation(pet);
+        starvation.setPet(pet);
         starvation.execute(Instant.now().getEpochSecond());
 
-        IEvent boring = new Boring(pet);
+        boring.setPet(pet);
         boring.execute(Instant.now().getEpochSecond());
     }
-
-
 }

@@ -111,8 +111,13 @@ public class Pet implements IPet {
         return Instant.now().getEpochSecond() - birth_date;
     }
 
+    public long getId() {
+        return id;
+    }
+
     @Override
     public void birth() {
+        this.id = 1;
         this.birth_date = Instant.now().getEpochSecond();
         this.health = 100;
         this.satiety = 100;
