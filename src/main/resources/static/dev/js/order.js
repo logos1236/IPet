@@ -31,7 +31,7 @@ jQuery(document).ready(function () {
                         if (data_json.success == 1) {
                             toastr.success(data_json.success_message);
                         } else {
-                            toastr.success(data_json.error_message);
+                            toastr.error(data_json.error_message);
                         }
                     }
                 },

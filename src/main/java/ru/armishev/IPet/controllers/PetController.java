@@ -66,21 +66,40 @@ public class PetController {
 
     @PostMapping("/create/")
     @ResponseBody
-    public String create(Model model) {
+    public String create(HttpServletRequest request) {
         JsonObject result = new JsonObject();
 
-        pet.birth();
-        pet.setName("Mailo");
+        String pet_name = request.getParameter("name");
+        boolean error = false;
 
-        result.addProperty("success", true);
-        result.addProperty("success_message", "Питомец успешно создан");
+        if ((pet.getId() > 0) && !error) {
+            error = true;
+
+            result.addProperty("success", false);
+            result.addProperty("error_message", "Питомец уже создан");
+        }
+
+        if ((pet_name.equals("")) && !error) {
+            error = true;
+
+            result.addProperty("success", false);
+            result.addProperty("error_message", "Имя питомца пусто");
+        }
+
+        if (!error) {
+            pet.birth();
+            pet.setName(pet_name);
+
+            result.addProperty("success", true);
+            result.addProperty("success_message", "Питомец успешно создан");
+        }
 
         return result.toString();
     }
 
     @PostMapping(value = "/action/", produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String action(HttpServletRequest request, Model model) {
+    public String action(HttpServletRequest request) {
         IPetView view = new PetView(pet);
         JsonObject result = new JsonObject();
         result.addProperty("success", false);
