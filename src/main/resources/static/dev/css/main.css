@@ -30,6 +30,14 @@ h2 {
     box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 0px 0px 10px 5px rgba(0,0,0,0);
 }
 
+#htmlPetLife {
+    height:100px;
+    box-sizing:border-box;
+    padding:5px;
+    overflow-y:scroll;
+    border: 1px solid #b5b5b5;
+}
+
 .btn {
 	box-shadow:inset 0px 1px 0px 0px #54a3f7;
 	background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);

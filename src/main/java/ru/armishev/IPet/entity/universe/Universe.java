@@ -14,14 +14,15 @@ import ru.armishev.IPet.entity.pet.IPet;
 
 @Service
 public class Universe implements IUniverse {
-    @Autowired
     private IPet pet;
 
     @Autowired
     EventFactory eventFactory;
 
     @Override
-    public void timeMachine() {
+    public void timeMachine(IPet pet) {
+        this.pet = pet;
+
         long current_time = Instant.now().getEpochSecond();
         long last_visit_pet_time = pet.getLastVisitTime();
 

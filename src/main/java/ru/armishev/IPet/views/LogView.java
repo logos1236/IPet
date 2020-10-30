@@ -37,7 +37,7 @@ public class LogView implements ILogView {
     }
 
     private List<LogPetAction> getLastTimePetAction() {
-        long period_before = 60*60*24;
+        long period_before = 15;
         long start_timestamp = Instant.now().getEpochSecond() - period_before;
 
         return logRepository.findPetActionList(pet.getId(), start_timestamp);
