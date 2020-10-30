@@ -38,7 +38,7 @@ public class PetController {
             return "redirect:/";
         }
 
-        universe.timeMachine();
+        universe.timeMachine(pet);
 
         IPetView view = new PetView(pet);
         ILogView logView = new LogView(logRepository, pet);
@@ -57,7 +57,7 @@ public class PetController {
         IPetView view = new PetView(pet);
         ILogView logView = new LogView(logRepository, pet);
 
-        universe.timeMachine();
+        universe.timeMachine(pet);
 
         result.addProperty("htmlPetControlPanel", view.getHtmlControlPanel());
         result.addProperty("htmlPet", view.getHtml());
