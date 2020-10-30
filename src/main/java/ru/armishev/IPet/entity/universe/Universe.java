@@ -2,6 +2,7 @@ package ru.armishev.IPet.entity.universe;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,6 +98,9 @@ public class Universe implements IUniverse {
         return result;
     }
 
+    /*
+    Добавляем питомца в список активных
+     */
     private void setPetToActiveList(IPet pet) {
         String user_session_id = RequestContextHolder.currentRequestAttributes().getSessionId();
         active_pet_list.put(pet, user_session_id);

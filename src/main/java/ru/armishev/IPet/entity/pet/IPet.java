@@ -17,6 +17,7 @@ public interface IPet {
     int getSatiety();
     int getHappiness();
     long getId();
+    long getBirth_date();
     Map<Class<? extends IEvent>, Long> getEvent_time_list();
     void setEvent_time_list(Class<? extends IEvent> class_name, long time);
     long getLastVisitTime();
@@ -31,4 +32,5 @@ public interface IPet {
 
     PetDAO saveToDAO();
     void loadFromDAO(long id) throws IllegalArgumentException;
+    void loadFromPet(IPet another_pet);
 }

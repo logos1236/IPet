@@ -189,6 +189,23 @@ public class Pet implements IPet {
     }
 
     @Override
+    public long getBirth_date() {
+        return birth_date;
+    }
+
+    @Override
+    public void loadFromPet(IPet another_pet) {
+        this.id = another_pet.getId();
+        this.name = another_pet.getName();
+        this.birth_date = another_pet.getBirth_date();
+        this.health = another_pet.getHeath();
+        this.satiety = another_pet.getSatiety();
+        this.happiness = another_pet.getHappiness();
+        this.last_visit_time = another_pet.getLastVisitTime();
+        this.is_escaped = another_pet.isEscaped();
+    }
+
+    @Override
     public int getHeath() {
         return this.health;
     }
