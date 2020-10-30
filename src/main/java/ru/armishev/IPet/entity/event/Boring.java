@@ -13,10 +13,10 @@ import java.util.function.Consumer;
 @Service
 @Scope("prototype")
 public class Boring extends Event  {
-    private int probability = 50;
-    private long timeInterval = 10;
+    private int probability = 90;
+    private long timeInterval = 5;
     private Consumer<IPet> cons = (pet) -> {
-        pet.boring();
+        pet.boring(45);
 
         afterSuccessAction();
     };
@@ -41,7 +41,7 @@ public class Boring extends Event  {
     private void afterSuccessAction() {
         //long current_time = Instant.now().getEpochSecond();
         long current_time = System.currentTimeMillis();
-        getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, "Скучает"));
+        getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, pet.getName()+" скучает"));
     }
 
     protected long getEventTimeInterval() {

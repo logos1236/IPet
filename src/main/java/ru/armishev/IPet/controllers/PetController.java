@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.armishev.IPet.dao.log.LogPetActionDAO;
 import ru.armishev.IPet.dao.log.LogRepository;
 import ru.armishev.IPet.entity.action.PetAction;
 import ru.armishev.IPet.entity.pet.IPet;
@@ -141,6 +142,7 @@ public class PetController {
     @ResponseBody
     public String action(HttpServletRequest request) {
         IPetView view = new PetView(pet);
+        long current_time = System.currentTimeMillis();
 
         JsonObject result = new JsonObject();
         result.addProperty("success", false);
@@ -153,11 +155,17 @@ public class PetController {
         String action = request.getParameter("action");
         if (PetAction.valueOf(action).equals(PetAction.FEED)) {
             pet.eat(10);
+
+            logRepository.save(new LogPetActionDAO(pet.getId(), current_time, pet.getName()+" покормлен"));
+
             result.addProperty("success", true);
             result.addProperty("success_message", "Успешно покормлен");
         }
         if (PetAction.valueOf(action).equals(PetAction.PLAY)) {
             pet.play();
+
+            logRepository.save(new LogPetActionDAO(pet.getId(), current_time, pet.getName()+" поиграл c хозяином"));
+
             result.addProperty("success", true);
             result.addProperty("success_message", "Успешно поиграл");
         }

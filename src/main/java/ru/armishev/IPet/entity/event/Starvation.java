@@ -34,7 +34,7 @@ public class Starvation extends Event {
 
     private void afterSuccessAction() {
         long current_time = System.currentTimeMillis();
-        getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, "Проголодался "+pet.getName()+" : "+pet.getId()));
+        getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, pet.getName()+" проголодался"));
     }
 
     protected long getEventTimeInterval() {

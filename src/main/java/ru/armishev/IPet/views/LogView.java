@@ -4,12 +4,14 @@ import ru.armishev.IPet.dao.log.LogPetActionDAO;
 import ru.armishev.IPet.dao.log.LogRepository;
 import ru.armishev.IPet.entity.pet.IPet;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.List;
 
 public class LogView implements ILogView {
     private LogRepository logRepository;
     private IPet pet;
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy' 'HH:mm:ss");
 
     public LogView(LogRepository logRepository, IPet pet) {
         this.logRepository = logRepository;
@@ -25,7 +27,7 @@ public class LogView implements ILogView {
         if (petAction != null) {
             for (LogPetActionDAO log : petAction) {
                 sb.append("<div class='pet_action_list_elem'>")
-                        .append("<span>").append(log.getTimestamp()).append("</span>")
+                        .append("<span>").append(simpleDateFormat.format(log.getTimestamp())).append("</span>")
                         .append("<span>").append(" : ").append("</span>")
                         .append("<span>").append(log.getMessage()).append("</span>")
                         .append("</div>");

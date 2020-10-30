@@ -35,7 +35,7 @@ public class PlayAlone extends Event {
 
     private void afterSuccessAction() {
         long current_time = System.currentTimeMillis();
-        getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, "Побегал по комнате"));
+        getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, pet.getName()+" побегал по комнате"));
     }
 
     protected long getEventTimeInterval() {

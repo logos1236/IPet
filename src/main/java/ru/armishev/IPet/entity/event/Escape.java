@@ -29,7 +29,7 @@ public class Escape extends Event {
 
     private void afterSuccessAction() {
         long current_time = System.currentTimeMillis();
-        getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, "Питомец сбежал"));
+        getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, pet.getName()+" сбежал"));
     }
 
     protected long getEventTimeInterval() {
