@@ -9,7 +9,6 @@ import ru.armishev.IPet.dao.LogRepository;
 import ru.armishev.IPet.entity.action.PetAction;
 import ru.armishev.IPet.entity.pet.IPet;
 import ru.armishev.IPet.entity.universe.IUniverse;
-import ru.armishev.IPet.entity.user.IUser;
 import ru.armishev.IPet.views.ILogView;
 import ru.armishev.IPet.views.IPetView;
 import ru.armishev.IPet.views.LogView;
@@ -22,9 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 public class PetController {
     @Autowired
     private IPet pet;
-
-    @Autowired
-    private IUser user;
 
     @Autowired
     private IUniverse universe;
