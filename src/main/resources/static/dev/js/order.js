@@ -9,7 +9,7 @@ jQuery(document).ready(function () {
         $(this).closest("form").submit();
         return false;
     });
-    $("body").on("submit", ".service-action-pet-create-from", function () {
+    $("body").on("submit", ".service-action-pet-create-form", function () {
             var _this_form = $(this);
             var _this_loader = _this_form.find(".for-load");
             var data_form = _this_form.serialize();

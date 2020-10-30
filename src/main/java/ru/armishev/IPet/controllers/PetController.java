@@ -4,10 +4,7 @@ import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ru.armishev.IPet.dao.LogRepository;
 import ru.armishev.IPet.entity.action.PetAction;
 import ru.armishev.IPet.entity.pet.IPet;
@@ -37,7 +34,7 @@ public class PetController {
 
     @GetMapping("/")
     public String index(Model model) {
-        if (pet.getId() == 0 || pet.isEscaped()) {
+        if (pet.getId() == 0) {
             return "redirect:/";
         }
 
@@ -72,31 +69,57 @@ public class PetController {
     @PostMapping("/create/")
     @ResponseBody
     public String create(HttpServletRequest request) {
+        String pet_name = request.getParameter("name");
         JsonObject result = new JsonObject();
 
-        String pet_name = request.getParameter("name");
-        boolean error = false;
+        try {
+            if ((pet.getId() > 0) && (!pet.isEscaped())) {
+                throw new Exception("Питомец уже создан");
+            }
+            if ((pet_name.equals(""))) {
+                throw new Exception("Имя питомца пусто");
+            }
 
-        if ((pet.getId() > 0) && (!pet.isEscaped()) && !error) {
-            error = true;
-
-            result.addProperty("success", false);
-            result.addProperty("error_message", "Питомец уже создан");
-        }
-
-        if ((pet_name.equals("")) && !error) {
-            error = true;
-
-            result.addProperty("success", false);
-            result.addProperty("error_message", "Имя питомца пусто");
-        }
-
-        if (!error) {
             pet.birth(pet_name);
 
             result.addProperty("success", true);
             result.addProperty("success_message", "Питомец успешно создан");
             result.addProperty("redirect_url", "/pet/");
+        } catch (Exception e) {
+            result.addProperty("success", false);
+            result.addProperty("error_message", e.getMessage());
+        }
+
+        return result.toString();
+    }
+
+    @PostMapping("/get-existing/")
+    @ResponseBody
+    public String getExisting(HttpServletRequest request) {
+        JsonObject result = new JsonObject();
+        Long pet_id;
+
+        try {
+            try {
+                pet_id = Long.valueOf(request.getParameter("pet_id"));
+            } catch (Exception e) {
+                throw new Exception("id питомца не задано");
+            }
+            if ((pet_id < 0 || pet_id == null)) {
+                throw new Exception("id питомца не задано");
+            }
+            if ((pet.getId() > 0) && (!pet.isEscaped())) {
+                throw new Exception("Питомец уже создан");
+            }
+
+            pet.loadFromDAO(pet_id);
+
+            result.addProperty("success", true);
+            result.addProperty("success_message", "Питомец успешно загружен");
+            result.addProperty("redirect_url", "/pet/");
+        } catch (Exception e) {
+            result.addProperty("success", false);
+            result.addProperty("error_message", e.getMessage());
         }
 
         return result.toString();
@@ -108,7 +131,7 @@ public class PetController {
         IPetView view = new PetView(pet);
         JsonObject result = new JsonObject();
         result.addProperty("success", false);
-        result.addProperty("success_message", "Непонятная команда");
+        result.addProperty("error_message", "Непонятная команда");
 
         String action = request.getParameter("action");
         if (PetAction.valueOf(action).equals(PetAction.FEED)) {

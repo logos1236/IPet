@@ -172,6 +172,16 @@ public class Pet implements IPet {
     }
 
     @Override
+    public void loadFromDAO(long id) throws IllegalArgumentException {
+        Optional<PetDAO> petDAO = petRepository.findById(id);
+        if (petDAO.isPresent()) {
+            getPetFromDAO(petDAO.get());
+        } else {
+            throw new IllegalArgumentException("Нет питомца с таким id");
+        }
+    }
+
+    @Override
     public int getHeath() {
         return this.health;
     }

@@ -16,18 +16,17 @@ public interface IPet {
     int getSatiety();
     int getHappiness();
     long getId();
+    Map<Class<? extends IEvent>, Long> getEvent_time_list();
+    void setEvent_time_list(Class<? extends IEvent> class_name, long time);
+    long getLastVisitTime();
+    void setLastVisitTime(long current_time);
 
     void eat(int satiety);
     void starving();
-
     void play(int val);
     void play();
     void boring(int val);
     void boring();
 
-    Map<Class<? extends IEvent>, Long> getEvent_time_list();
-    void setEvent_time_list(Class<? extends IEvent> class_name, long time);
-
-    long getLastVisitTime();
-    void setLastVisitTime(long current_time);
+    void loadFromDAO(long id) throws IllegalArgumentException;
 }

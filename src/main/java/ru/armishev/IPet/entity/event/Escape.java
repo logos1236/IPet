@@ -21,7 +21,7 @@ public class Escape extends Event {
     @Override
     protected boolean isHappenedEvent() {
         boolean result = false;
-        if (pet.getSatiety() < 90) {
+        if (pet.getHeath() < 20) {
             result = true;
         }
 
