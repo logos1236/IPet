@@ -8,6 +8,7 @@ $(document).ready(function () {
                             if (typeof data_json != 'undefined') {
                                 $("#htmlPetControlPanel").html(data_json.htmlPetControlPanel);
                                 $("#htmlPet").html(data_json.htmlPet);
+                                $("#htmlPetLife").html(data_json.htmlPetLife);
                             }
                         },
                         error: function () {

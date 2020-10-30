@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.armishev.IPet.dao.LogAction;
 import ru.armishev.IPet.dao.LogRepository;
 import ru.armishev.IPet.entity.action.PetAction;
 import ru.armishev.IPet.entity.pet.IPet;
 import ru.armishev.IPet.entity.universe.IUniverse;
 import ru.armishev.IPet.entity.user.IUser;
+import ru.armishev.IPet.views.ILogView;
 import ru.armishev.IPet.views.IPetView;
+import ru.armishev.IPet.views.LogView;
 import ru.armishev.IPet.views.PetView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class PetController {
     private IUniverse universe;
 
     @Autowired
-    private LogRepository repository;
+    private LogRepository logRepository;
 
 
     @GetMapping("/")
@@ -44,12 +45,11 @@ public class PetController {
         universe.timeMachine();
 
         IPetView view = new PetView(pet);
+        ILogView logView = new LogView(logRepository, pet);
+
         model.addAttribute("htmlPet", view.getHtml());
         model.addAttribute("htmlPetControlPanel", view.getHtmlControlPanel());
-
-        for (LogAction log : repository.findAll()) {
-            System.out.println(log);
-        }
+        model.addAttribute("htmlPetLife", logView.getPetLifeHtml());
 
         return "pet/index.html";
     }
@@ -59,11 +59,13 @@ public class PetController {
     public String indexJson() {
         JsonObject result = new JsonObject();
         IPetView view = new PetView(pet);
+        ILogView logView = new LogView(logRepository, pet);
+
         universe.timeMachine();
 
         result.addProperty("htmlPetControlPanel", view.getHtmlControlPanel());
         result.addProperty("htmlPet", view.getHtml());
-
+        result.addProperty("htmlPetLife", logView.getPetLifeHtml());
 
         return result.toString();
     }

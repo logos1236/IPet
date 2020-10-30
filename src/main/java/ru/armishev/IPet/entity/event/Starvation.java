@@ -1,13 +1,9 @@
 package ru.armishev.IPet.entity.event;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import ru.armishev.IPet.dao.LogAction;
+import ru.armishev.IPet.dao.LogPetAction;
 import ru.armishev.IPet.dao.LogRepository;
 import ru.armishev.IPet.entity.pet.IPet;
 
@@ -44,7 +40,7 @@ public class Starvation extends Event {
 
     private void afterSuccessAction() {
         long current_time = Instant.now().getEpochSecond();
-        getLogRepository().save(new LogAction(pet.getId(), current_time, "Проголодался "+pet.getName()));
+        getLogRepository().save(new LogPetAction(pet.getId(), current_time, "Проголодался "+pet.getName()));
     }
 
     protected long getTimeInterval() {

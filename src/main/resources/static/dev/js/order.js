@@ -85,6 +85,7 @@ jQuery(document).ready(function () {
 
                             $("#htmlPetControlPanel").html(data_json.htmlPetControlPanel);
                             $("#htmlPet").html(data_json.htmlPet);
+                            $("#htmlPetLife").html(data_json.htmlPetLife);
                         } else {
                             toastr.success(data_json.error_message);
                         }

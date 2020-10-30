@@ -1,22 +1,24 @@
 package ru.armishev.IPet.dao;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.Filter;
+
+import javax.persistence.*;
 
 @Entity
-public class LogAction {
+@Table(name = "LOGPETACTION")
+public class LogPetAction {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
+    @Filter(name = "pet")
     private long pet_id;
+
     private long timestamp;
     private String message;
 
-    protected LogAction() {}
-    public LogAction(long pet_id, long timestamp, String message) {
+    protected LogPetAction() {}
+    public LogPetAction(long pet_id, long timestamp, String message) {
         this.pet_id = pet_id;
         this.timestamp = timestamp;
         this.message = message;
