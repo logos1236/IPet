@@ -13,7 +13,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model) {
-        if (pet.getId() > 0) {
+        if (pet.getId() > 0 && (!pet.isEscaped())) {
             return "redirect:/pet/";
         }
 

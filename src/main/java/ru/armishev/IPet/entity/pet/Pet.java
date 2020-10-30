@@ -1,7 +1,11 @@
 package ru.armishev.IPet.entity.pet;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
+import ru.armishev.IPet.dao.LogRepository;
+import ru.armishev.IPet.dao.PetDAO;
+import ru.armishev.IPet.dao.PetRepository;
 import ru.armishev.IPet.entity.event.IEvent;
 
 import java.time.Instant;
@@ -10,6 +14,9 @@ import java.util.*;
 @Service
 @SessionScope
 public class Pet implements IPet {
+    @Autowired
+    private PetRepository petRepository;
+
     private static final int HAPPINESS_MAX = 100;
     private static final int HEALTH_MAX = 100;
     private static final int SATIETY_MAX = 100;
@@ -23,9 +30,7 @@ public class Pet implements IPet {
     private int satiety;
     private int happiness;
     private long last_visit_time;
-
     private boolean is_escaped = false;
-
     private Map<Class<? extends IEvent>, Long> event_time_list = new HashMap<>();
 
     public Map<Class<? extends IEvent>, Long> getEvent_time_list() {
@@ -121,13 +126,49 @@ public class Pet implements IPet {
     }
 
     @Override
-    public void birth() {
-        this.id = 1;
+    public void birth(String name) {
+        this.name = name;
         this.birth_date = Instant.now().getEpochSecond();
         this.health = 100;
         this.satiety = 100;
         this.happiness = HAPPINESS_MAX;
+        this.is_escaped = false;
         this.last_visit_time = Instant.now().getEpochSecond();
+        this.event_time_list = new HashMap<>();
+
+        PetDAO petDAO = setPetToDAO();
+        getPetFromDAO(petDAO);
+    }
+
+    /*
+    Сохраняем данные питомца в базу
+    */
+    private PetDAO setPetToDAO() {
+        PetDAO petDAO = new PetDAO();
+        petDAO.setName(this.name);
+        petDAO.setBirth_date(this.birth_date);
+        petDAO.setHealth(this.health);
+        petDAO.setSatiety(this.satiety);
+        petDAO.setHappiness(this.happiness);
+        petDAO.setLast_visit_time(this.last_visit_time);
+        petDAO.setIs_escaped(this.is_escaped);
+        petDAO = petRepository.save(petDAO);
+
+        return petDAO;
+    }
+
+    /*
+    Получаем данные питомца из базы
+    */
+    private void getPetFromDAO(PetDAO petDAO) {
+        this.id = petDAO.getId();
+        this.name = petDAO.getName();
+        this.birth_date = petDAO.getBirth_date();
+        this.health = petDAO.getHealth();
+        this.satiety = petDAO.getSatiety();
+        this.happiness = petDAO.getHappiness();
+        this.last_visit_time = petDAO.getLast_visit_time();
+        this.is_escaped = petDAO.isIs_escaped();
     }
 
     @Override

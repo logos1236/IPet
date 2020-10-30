@@ -37,7 +37,7 @@ public class PetController {
 
     @GetMapping("/")
     public String index(Model model) {
-        if (pet.getId() == 0) {
+        if (pet.getId() == 0 || pet.isEscaped()) {
             return "redirect:/";
         }
 
@@ -77,7 +77,7 @@ public class PetController {
         String pet_name = request.getParameter("name");
         boolean error = false;
 
-        if ((pet.getId() > 0) && !error) {
+        if ((pet.getId() > 0) && (!pet.isEscaped()) && !error) {
             error = true;
 
             result.addProperty("success", false);
@@ -92,8 +92,7 @@ public class PetController {
         }
 
         if (!error) {
-            pet.birth();
-            pet.setName(pet_name);
+            pet.birth(pet_name);
 
             result.addProperty("success", true);
             result.addProperty("success_message", "Питомец успешно создан");

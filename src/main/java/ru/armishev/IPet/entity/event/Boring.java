@@ -1,10 +1,9 @@
 package ru.armishev.IPet.entity.event;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ru.armishev.IPet.dao.LogPetAction;
+import ru.armishev.IPet.dao.LogPetActionDAO;
 import ru.armishev.IPet.dao.LogRepository;
 import ru.armishev.IPet.entity.pet.IPet;
 
@@ -41,8 +40,9 @@ public class Boring extends Event  {
     protected LogRepository getLogRepository() {return null;};
 
     private void afterSuccessAction() {
-        long current_time = Instant.now().getEpochSecond();
-        getLogRepository().save(new LogPetAction(pet.getId(), current_time, "Скучает"));
+        //long current_time = Instant.now().getEpochSecond();
+        long current_time = System.currentTimeMillis();
+        getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, "Скучает"));
     }
 
     protected long getEventTimeInterval() {

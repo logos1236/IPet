@@ -5,7 +5,7 @@ import ru.armishev.IPet.entity.event.IEvent;
 import java.util.Map;
 
 public interface IPet {
-    void birth();
+    void birth(String name);
     boolean isEscaped();
     void escape();
 

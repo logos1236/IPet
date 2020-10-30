@@ -1,6 +1,6 @@
 package ru.armishev.IPet.views;
 
-import ru.armishev.IPet.dao.LogPetAction;
+import ru.armishev.IPet.dao.LogPetActionDAO;
 import ru.armishev.IPet.dao.LogRepository;
 import ru.armishev.IPet.entity.pet.IPet;
 
@@ -19,11 +19,11 @@ public class LogView implements ILogView {
     @Override
     public String getPetLifeHtml() {
         StringBuilder sb = new StringBuilder();
-        List<LogPetAction> petAction = getLastTimePetAction();
+        List<LogPetActionDAO> petAction = getLastTimePetAction();
 
         sb.append("<div class='pet_action_list'>");
         if (petAction != null) {
-            for (LogPetAction log : petAction) {
+            for (LogPetActionDAO log : petAction) {
                 sb.append("<div class='pet_action_list_elem'>")
                         .append("<span>").append(log.getTimestamp()).append("</span>")
                         .append("<span>").append(" : ").append("</span>")
@@ -36,7 +36,7 @@ public class LogView implements ILogView {
         return sb.toString();
     }
 
-    private List<LogPetAction> getLastTimePetAction() {
+    private List<LogPetActionDAO> getLastTimePetAction() {
         long period_before = 15;
         long start_timestamp = Instant.now().getEpochSecond() - period_before;
 

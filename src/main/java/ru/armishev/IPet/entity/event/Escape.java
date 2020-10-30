@@ -2,7 +2,7 @@ package ru.armishev.IPet.entity.event;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ru.armishev.IPet.dao.LogPetAction;
+import ru.armishev.IPet.dao.LogPetActionDAO;
 import ru.armishev.IPet.entity.pet.IPet;
 
 import java.time.Instant;
@@ -29,8 +29,8 @@ public class Escape extends Event {
     }
 
     private void afterSuccessAction() {
-        long current_time = Instant.now().getEpochSecond();
-        getLogRepository().save(new LogPetAction(pet.getId(), current_time, "Питомец сбежал"));
+        long current_time = System.currentTimeMillis();
+        getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, "Питомец сбежал"));
     }
 
     protected long getEventTimeInterval() {
