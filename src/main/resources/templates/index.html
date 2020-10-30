@@ -9,7 +9,7 @@
         <section class="pet_login_section">
             <h2>Создайте нового питомца</h2>
             <form class='service-action-pet-create-form' action='/pet/create/' method='post'>
-                <input class="css-input" type="text" name="name" value="" required/>
+                <input class="css-input" placeholder="введите имя" type="text" name="name" value="" required/>
                 <div class="service-action-pet-create-btn btn">Создать питомца</div>
             </form>
         </section>
@@ -17,7 +17,7 @@
         <section class="pet_login_section">
             <h2>или введите id уже существующего</h2>
             <form class='service-action-pet-create-form' action='/pet/get-existing/' method='post'>
-                <input class="css-input" type="text" name="pet_id" value="" numeric required/>
+                <input class="css-input" placeholder="введите id" type="text" name="pet_id" value="" numeric required/>
                 <div class="service-action-pet-create-btn btn">Навестить питомца</div>
             </form>
         </section>

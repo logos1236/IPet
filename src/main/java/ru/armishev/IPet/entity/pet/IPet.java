@@ -1,5 +1,6 @@
 package ru.armishev.IPet.entity.pet;
 
+import ru.armishev.IPet.dao.PetDAO;
 import ru.armishev.IPet.entity.event.IEvent;
 
 import java.util.Map;
@@ -28,5 +29,6 @@ public interface IPet {
     void boring(int val);
     void boring();
 
+    PetDAO saveToDAO();
     void loadFromDAO(long id) throws IllegalArgumentException;
 }

@@ -108,9 +108,6 @@ public class PetController {
             if ((pet_id < 0 || pet_id == null)) {
                 throw new Exception("id питомца не задано");
             }
-            if ((pet.getId() > 0) && (!pet.isEscaped())) {
-                throw new Exception("Питомец уже создан");
-            }
 
             pet.loadFromDAO(pet_id);
 

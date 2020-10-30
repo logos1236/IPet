@@ -135,15 +135,19 @@ public class Pet implements IPet {
         this.last_visit_time = Instant.now().getEpochSecond();
         this.event_time_list = new HashMap<>();
 
-        PetDAO petDAO = savePetToDAO();
+        PetDAO petDAO = saveToDAO();
         getPetFromDAO(petDAO);
     }
 
     /*
     Сохраняем данные питомца в базу
     */
-    private PetDAO savePetToDAO() {
+    public PetDAO saveToDAO() {
         PetDAO petDAO = new PetDAO();
+
+        if (this.id > 0) {
+            petDAO.setId(this.id);
+        }
         petDAO.setName(this.name);
         petDAO.setBirth_date(this.birth_date);
         petDAO.setHealth(this.health);
@@ -152,6 +156,7 @@ public class Pet implements IPet {
         petDAO.setLast_visit_time(this.last_visit_time);
         petDAO.setIs_escaped(this.is_escaped);
         petDAO.setEvent_time_list(this.event_time_list);
+
         petDAO = petRepository.save(petDAO);
 
         return petDAO;

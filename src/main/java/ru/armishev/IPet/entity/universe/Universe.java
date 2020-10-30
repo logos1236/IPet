@@ -28,14 +28,15 @@ public class Universe implements IUniverse {
     @Override
     public void timeMachine() {
         long current_time = Instant.now().getEpochSecond();
-        long last_visit_pet_time = pet.getLastVisitTime();
 
-        if (last_visit_pet_time > 0) {
-            for (long i_time = last_visit_pet_time; i_time <= current_time; i_time++) {
+        if (pet.getLastVisitTime() > 0 && pet.getId() > 0) {
+            for (long i_time = pet.getLastVisitTime(); i_time <= current_time; i_time++) {
                 if (!pet.isEscaped()) {
                     createEventInPetLive(i_time);
                 }
             }
+
+            pet.saveToDAO();
         }
     }
 
