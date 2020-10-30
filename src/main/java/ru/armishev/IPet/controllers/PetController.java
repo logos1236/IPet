@@ -126,9 +126,14 @@ public class PetController {
     @ResponseBody
     public String action(HttpServletRequest request) {
         IPetView view = new PetView(pet);
+
         JsonObject result = new JsonObject();
         result.addProperty("success", false);
         result.addProperty("error_message", "Непонятная команда");
+
+        universe.timeMachine(pet);
+
+        pet.loadFromDAO(pet.getId());
 
         String action = request.getParameter("action");
         if (PetAction.valueOf(action).equals(PetAction.FEED)) {
@@ -141,6 +146,8 @@ public class PetController {
             result.addProperty("success", true);
             result.addProperty("success_message", "Успешно поиграл");
         }
+
+        pet.saveToDAO();
 
         result.addProperty("htmlPetControlPanel", view.getHtmlControlPanel());
         result.addProperty("htmlPet", view.getHtml());

@@ -4,4 +4,5 @@ import ru.armishev.IPet.entity.pet.IPet;
 
 public interface IUniverse {
     void timeMachine(IPet pet);
+    boolean isGenerateDataByEvent(IPet pet);
 }
