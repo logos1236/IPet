@@ -17,9 +17,13 @@ public class EventFactory {
     @Autowired
     Boring boring;
 
+    @Autowired
+    Escape escape;
+
     public List<IEvent> getEventList() {
         List<IEvent> list = new ArrayList<>();
 
+        list.add(escape);
         list.add(starvation);
         list.add(boring);
 

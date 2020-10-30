@@ -15,9 +15,6 @@ import java.util.function.Consumer;
 @Service
 @Scope("prototype")
 public class Boring extends Event  {
-    @Autowired
-    public LogRepository repository;
-
     private int probability = 50;
     private long timeInterval = 10;
     private Consumer<IPet> cons = (pet) -> {
@@ -48,7 +45,7 @@ public class Boring extends Event  {
         getLogRepository().save(new LogPetAction(pet.getId(), current_time, "Скучает"));
     }
 
-    protected long getTimeInterval() {
+    protected long getEventTimeInterval() {
         return timeInterval;
     }
 

@@ -36,15 +36,12 @@ public class Starvation extends Event {
         return result;
     }
 
-    @Lookup
-    protected LogRepository getLogRepository() {return null;};
-
     private void afterSuccessAction() {
         long current_time = Instant.now().getEpochSecond();
         getLogRepository().save(new LogPetAction(pet.getId(), current_time, "Проголодался "+pet.getName()));
     }
 
-    protected long getTimeInterval() {
+    protected long getEventTimeInterval() {
         return timeInterval;
     }
 

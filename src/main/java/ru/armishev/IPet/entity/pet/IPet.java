@@ -6,7 +6,8 @@ import java.util.Map;
 
 public interface IPet {
     void birth();
-    boolean isAlive();
+    boolean isEscaped();
+    void escape();
 
     String getName();
     void setName(String name);

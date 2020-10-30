@@ -30,6 +30,10 @@ h2 {
     box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 0px 0px 10px 5px rgba(0,0,0,0);
 }
 
+#htmlPet {
+    margin:0px 0px 20px 0px;
+}
+
 #htmlPetLife {
     height:100px;
     box-sizing:border-box;
@@ -104,4 +108,11 @@ h2 {
     display:block;
     margin:10px 0px;
     font-weight:bold;
+}
+
+.status_bar_pet .escape {
+    font-size:22px;
+    color:#f00;
+    font-weight:bold;
+    text-align:center;
 }

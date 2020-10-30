@@ -17,13 +17,19 @@ public abstract class Event implements IEvent {
     @Autowired
     protected IPet pet;
 
+    /*
+    Действия во время события
+     */
     protected abstract Consumer<IPet> getCons();
 
-    protected abstract long getTimeInterval();
+    /*
+    Временной интервал события
+     */
+    protected abstract long getEventTimeInterval();
 
     /*
-        Время последнего случившегося события
-         */
+    Время последнего случившегося события
+    */
     protected long getLastTimeExec() {
         Map<Class<? extends IEvent>, Long> event_time_list = pet.getEvent_time_list();
 
@@ -40,7 +46,7 @@ public abstract class Event implements IEvent {
 
     /*
     Обновляем последнего случившегося события
-     */
+    */
     protected void increaseLastTimeExec(long time_interval) {
         Map<Class<? extends IEvent>, Long> event_time_list = pet.getEvent_time_list();
         long lastTimeExec = event_time_list.get(this.getClass());
@@ -55,15 +61,19 @@ public abstract class Event implements IEvent {
     */
     protected abstract boolean isHappenedEvent();
 
+
+    @Lookup
+    protected LogRepository getLogRepository() {return null;};
+
     @Override
     public void execute(long current_time) {
         long downtime_range = current_time - getLastTimeExec();
 
-        if((int)Math.floor(downtime_range/getTimeInterval()) > 0) {
-            if (isHappenedEvent()) {
+        if((int)Math.floor(downtime_range/ getEventTimeInterval()) > 0) {
+            if (isHappenedEvent() && !pet.isEscaped()) {
                 getCons().accept(pet);
             }
-            increaseLastTimeExec(getTimeInterval());
+            increaseLastTimeExec(getEventTimeInterval());
         }
     }
 }

@@ -24,6 +24,8 @@ public class Pet implements IPet {
     private int happiness;
     private long last_visit_time;
 
+    private boolean is_escaped = false;
+
     private Map<Class<? extends IEvent>, Long> event_time_list = new HashMap<>();
 
     public Map<Class<? extends IEvent>, Long> getEvent_time_list() {
@@ -95,8 +97,13 @@ public class Pet implements IPet {
     }
 
     @Override
-    public boolean isAlive() {
-        return (health > 0) ? true : false;
+    public boolean isEscaped() {
+        return is_escaped;
+    }
+
+    @Override
+    public void escape() {
+        is_escaped = true;
     }
 
     @Override

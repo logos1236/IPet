@@ -1,24 +1,19 @@
 package ru.armishev.IPet.entity.event;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ru.armishev.IPet.dao.LogPetAction;
-import ru.armishev.IPet.dao.LogRepository;
 import ru.armishev.IPet.entity.pet.IPet;
 
 import java.time.Instant;
-import java.util.Random;
 import java.util.function.Consumer;
 
 @Service
 @Scope("prototype")
-public class PlayAlone extends Event {
-    private int probability = 30;
-    private long timeInterval = 5;
+public class Escape extends Event {
+    private long timeInterval = 1;
     private Consumer<IPet> cons = (pet) -> {
-        pet.play(20);
+        pet.escape();
 
         afterSuccessAction();
     };
@@ -26,11 +21,7 @@ public class PlayAlone extends Event {
     @Override
     protected boolean isHappenedEvent() {
         boolean result = false;
-
-        Random r = new Random();
-        int i = r.ints(0, (100 + 1)).findFirst().getAsInt();
-
-        if (i <= probability) {
+        if (pet.getSatiety() < 90) {
             result = true;
         }
 
@@ -39,7 +30,7 @@ public class PlayAlone extends Event {
 
     private void afterSuccessAction() {
         long current_time = Instant.now().getEpochSecond();
-        getLogRepository().save(new LogPetAction(pet.getId(), current_time, "Побегал по комнате"));
+        getLogRepository().save(new LogPetAction(pet.getId(), current_time, "Питомец сбежал"));
     }
 
     protected long getEventTimeInterval() {

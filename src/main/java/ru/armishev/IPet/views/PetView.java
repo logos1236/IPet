@@ -24,12 +24,18 @@ public class PetView implements IPetView {
     private StringBuilder getStatusBar() {
         StringBuilder result = new StringBuilder();
 
-        result.append("<div class='status_bar_pet'><ul>")
-                .append("<li>").append("Имя").append(" : ").append(pet.getName()).append("</li>")
-                .append("<li>").append("Здоровье").append(" : ").append(pet.getHeath()).append("</li>")
-                .append("<li>").append("Сытость").append(" : ").append(pet.getSatiety()).append("</li>")
-                .append("<li>").append("Радость").append(" : ").append(pet.getHappiness()).append("</li>")
-                .append("</ul></div>");
+        if (!pet.isEscaped()) {
+            result.append("<div class='status_bar_pet'><ul>")
+                    .append("<li>").append("Имя").append(" : ").append(pet.getName()).append("</li>")
+                    .append("<li>").append("Здоровье").append(" : ").append(pet.getHeath()).append("</li>")
+                    .append("<li>").append("Сытость").append(" : ").append(pet.getSatiety()).append("</li>")
+                    .append("<li>").append("Радость").append(" : ").append(pet.getHappiness()).append("</li>")
+                    .append("</ul></div>");
+        } else {
+            result.append("<div class='status_bar_pet'>")
+                    .append("<div class='escape'>Ваш питомец сбежал искать лучшую жизнь.</div>")
+                    .append("</div>");
+        }
 
         return result;
     }
@@ -38,18 +44,24 @@ public class PetView implements IPetView {
     public String getHtmlControlPanel() {
         StringBuilder result = new StringBuilder();
 
-        result.append("<form class='service-action-pet-from' action='/pet/action/' method='post'>")
-                .append("<input type='hidden' name='action' value='' />");
+        if (!pet.isEscaped()) {
+            result.append("<form class='service-action-pet-from' action='/pet/action/' method='post'>")
+                    .append("<input type='hidden' name='action' value='' />");
 
-        result.append("<div class='control_bar_pet'><ul>");
-                if (!PetAction.getMap().isEmpty()) {
-                    for(Map.Entry<PetAction, String> entry: PetAction.getMap().entrySet()) {
-                        result.append("<li>").append("<div class='service-action-pet-btn btn' data-action='"+entry.getKey().name()+"'>"+entry.getValue()+"</div>").append("</li>");
-                    }
+            result.append("<div class='control_bar_pet'><ul>");
+            if (!PetAction.getMap().isEmpty()) {
+                for (Map.Entry<PetAction, String> entry : PetAction.getMap().entrySet()) {
+                    result.append("<li>").append("<div class='service-action-pet-btn btn' data-action='" + entry.getKey().name() + "'>" + entry.getValue() + "</div>").append("</li>");
                 }
-        result.append("</ul></div>");
+            }
+            result.append("</ul></div>");
 
-        result.append("</form>");
+            result.append("</form>");
+        } else {
+            result.append("<div class='control_bar_pet'><ul>");
+            result.append("<li>").append("<a href='/' class='btn'>Вернуться на главную</a>").append("</li>");
+            result.append("</ul></div>");
+        }
 
         return result.toString();
     }
