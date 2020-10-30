@@ -1,4 +1,4 @@
-package ru.armishev.IPet.dao;
+package ru.armishev.IPet.dao.pet;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

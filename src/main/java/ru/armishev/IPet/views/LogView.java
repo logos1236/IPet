@@ -1,7 +1,7 @@
 package ru.armishev.IPet.views;
 
-import ru.armishev.IPet.dao.LogPetActionDAO;
-import ru.armishev.IPet.dao.LogRepository;
+import ru.armishev.IPet.dao.log.LogPetActionDAO;
+import ru.armishev.IPet.dao.log.LogRepository;
 import ru.armishev.IPet.entity.pet.IPet;
 
 import java.time.Instant;

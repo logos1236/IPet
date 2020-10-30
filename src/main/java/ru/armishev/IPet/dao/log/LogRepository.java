@@ -1,4 +1,4 @@
-package ru.armishev.IPet.dao;
+package ru.armishev.IPet.dao.log;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;

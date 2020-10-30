@@ -3,12 +3,16 @@ package ru.armishev.IPet.entity.pet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
-import ru.armishev.IPet.dao.PetDAO;
-import ru.armishev.IPet.dao.PetRepository;
+import ru.armishev.IPet.dao.pet.PetDAO;
+import ru.armishev.IPet.dao.pet.PetRepository;
 import ru.armishev.IPet.entity.event.IEvent;
 
 import java.time.Instant;
 import java.util.*;
+
+/*
+Питомец
+*/
 
 @Service
 @SessionScope

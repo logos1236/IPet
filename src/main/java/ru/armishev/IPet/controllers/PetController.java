@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.armishev.IPet.dao.LogRepository;
+import ru.armishev.IPet.dao.log.LogRepository;
 import ru.armishev.IPet.entity.action.PetAction;
 import ru.armishev.IPet.entity.pet.IPet;
 import ru.armishev.IPet.entity.universe.IUniverse;
@@ -15,6 +15,10 @@ import ru.armishev.IPet.views.LogView;
 import ru.armishev.IPet.views.PetView;
 
 import javax.servlet.http.HttpServletRequest;
+
+/*
+Раздел с питомцем
+*/
 
 @Controller
 @RequestMapping(value = "/pet")
@@ -28,6 +32,9 @@ public class PetController {
     @Autowired
     private LogRepository logRepository;
 
+    /*
+    Страница с информацией о питомце
+    */
     @GetMapping("/")
     public String index(Model model) {
         if (pet.getId() == 0) {
@@ -46,6 +53,9 @@ public class PetController {
         return "pet/index.html";
     }
 
+    /*
+    Ajax с информацией о питомце
+    */
     @PostMapping("/")
     @ResponseBody
     public String indexJson() {
@@ -62,6 +72,9 @@ public class PetController {
         return result.toString();
     }
 
+    /*
+    Создать питомца
+    */
     @PostMapping("/create/")
     @ResponseBody
     public String create(HttpServletRequest request) {
@@ -89,6 +102,9 @@ public class PetController {
         return result.toString();
     }
 
+    /*
+    Получить сохраненного питомца из базы
+    */
     @PostMapping("/get-existing/")
     @ResponseBody
     public String getExisting(HttpServletRequest request) {
@@ -118,6 +134,9 @@ public class PetController {
         return result.toString();
     }
 
+    /*
+    События, которые пользователь генерирует для питомца
+    */
     @PostMapping(value = "/action/", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String action(HttpServletRequest request) {

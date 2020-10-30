@@ -2,17 +2,16 @@ package ru.armishev.IPet.entity.event;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ru.armishev.IPet.dao.LogPetActionDAO;
+import ru.armishev.IPet.dao.log.LogPetActionDAO;
 import ru.armishev.IPet.entity.pet.IPet;
 
-import java.time.Instant;
 import java.util.Random;
 import java.util.function.Consumer;
 
 @Service
 @Scope("prototype")
 public class PlayAlone extends Event {
-    private int probability = 30;
+    private int probability = 50;
     private long timeInterval = 5;
     private Consumer<IPet> cons = (pet) -> {
         pet.play(20);

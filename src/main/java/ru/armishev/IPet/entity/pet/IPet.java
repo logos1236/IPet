@@ -1,6 +1,6 @@
 package ru.armishev.IPet.entity.pet;
 
-import ru.armishev.IPet.dao.PetDAO;
+import ru.armishev.IPet.dao.pet.PetDAO;
 import ru.armishev.IPet.entity.event.IEvent;
 
 import java.util.Map;

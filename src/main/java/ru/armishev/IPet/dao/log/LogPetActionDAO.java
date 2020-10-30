@@ -1,7 +1,10 @@
-package ru.armishev.IPet.dao;
+package ru.armishev.IPet.dao.log;
 
 import javax.persistence.*;
 
+/*
+Логирование жизни питомца
+ */
 @Entity
 @Table(name = "LOGPETACTION")
 public class LogPetActionDAO {

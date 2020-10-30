@@ -4,12 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ru.armishev.IPet.dao.LogRepository;
+import ru.armishev.IPet.dao.log.LogRepository;
 import ru.armishev.IPet.entity.pet.IPet;
 
 import java.time.Instant;
 import java.util.Map;
 import java.util.function.Consumer;
+
+/*
+События, которые могут произойти с питомцем без участия пользователя
+ */
 
 @Service
 @Scope("prototype")
@@ -61,10 +65,15 @@ public abstract class Event implements IEvent {
     */
     protected abstract boolean isHappenedEvent();
 
-
+    /*
+    Объект для записи логов
+    */
     @Lookup
     protected LogRepository getLogRepository() {return null;};
 
+    /*
+    Выполнения действия над питомцем
+    */
     @Override
     public void execute(long current_time) {
         long downtime_range = current_time - getLastTimeExec();

@@ -3,11 +3,10 @@ package ru.armishev.IPet.entity.event;
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ru.armishev.IPet.dao.LogPetActionDAO;
-import ru.armishev.IPet.dao.LogRepository;
+import ru.armishev.IPet.dao.log.LogPetActionDAO;
+import ru.armishev.IPet.dao.log.LogRepository;
 import ru.armishev.IPet.entity.pet.IPet;
 
-import java.time.Instant;
 import java.util.Random;
 import java.util.function.Consumer;
 

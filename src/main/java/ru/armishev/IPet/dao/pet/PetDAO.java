@@ -1,10 +1,14 @@
-package ru.armishev.IPet.dao;
+package ru.armishev.IPet.dao.pet;
 
 import ru.armishev.IPet.entity.event.IEvent;
 
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
+
+/*
+Вспомогательная сущность для связи питомца в сессии и базе
+*/
 
 @Entity
 @Table(name = "PET")
