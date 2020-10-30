@@ -3,7 +3,6 @@ package ru.armishev.IPet.entity.pet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
-import ru.armishev.IPet.dao.LogRepository;
 import ru.armishev.IPet.dao.PetDAO;
 import ru.armishev.IPet.dao.PetRepository;
 import ru.armishev.IPet.entity.event.IEvent;
@@ -136,14 +135,14 @@ public class Pet implements IPet {
         this.last_visit_time = Instant.now().getEpochSecond();
         this.event_time_list = new HashMap<>();
 
-        PetDAO petDAO = setPetToDAO();
+        PetDAO petDAO = savePetToDAO();
         getPetFromDAO(petDAO);
     }
 
     /*
     Сохраняем данные питомца в базу
     */
-    private PetDAO setPetToDAO() {
+    private PetDAO savePetToDAO() {
         PetDAO petDAO = new PetDAO();
         petDAO.setName(this.name);
         petDAO.setBirth_date(this.birth_date);
@@ -152,6 +151,7 @@ public class Pet implements IPet {
         petDAO.setHappiness(this.happiness);
         petDAO.setLast_visit_time(this.last_visit_time);
         petDAO.setIs_escaped(this.is_escaped);
+        petDAO.setEvent_time_list(this.event_time_list);
         petDAO = petRepository.save(petDAO);
 
         return petDAO;

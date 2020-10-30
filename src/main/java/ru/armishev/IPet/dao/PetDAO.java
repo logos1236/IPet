@@ -11,6 +11,7 @@ import java.util.Map;
 public class PetDAO {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
     private String name;
@@ -20,7 +21,20 @@ public class PetDAO {
     private int happiness;
     private long last_visit_time;
     private boolean is_escaped = false;
-    //private Map<Class<? extends IEvent>, Long> event_time_list = new HashMap<>();
+
+    @ElementCollection
+    @CollectionTable(name = "event_time_list_mapping", joinColumns = {@JoinColumn(name = "pet_id", referencedColumnName = "id")})
+    @MapKeyColumn(name = "event_class")
+    @Column(name = "event_time")
+    private Map<Class<? extends IEvent>, Long> event_time_list = new HashMap<>();
+
+    public Map<Class<? extends IEvent>, Long> getEvent_time_list() {
+        return event_time_list;
+    }
+
+    public void setEvent_time_list(Map<Class<? extends IEvent>, Long> event_time_list) {
+        this.event_time_list = event_time_list;
+    }
 
     public long getId() {
         return id;
