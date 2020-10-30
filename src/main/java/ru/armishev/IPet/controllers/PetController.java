@@ -35,14 +35,13 @@ public class PetController {
     @Autowired
     private LogRepository logRepository;
 
-
     @GetMapping("/")
     public String index(Model model) {
         if (pet.getId() == 0) {
             return "redirect:/";
         }
 
-        universe.timeMachine(pet);
+        universe.timeMachine();
 
         IPetView view = new PetView(pet);
         ILogView logView = new LogView(logRepository, pet);
@@ -61,7 +60,7 @@ public class PetController {
         IPetView view = new PetView(pet);
         ILogView logView = new LogView(logRepository, pet);
 
-        universe.timeMachine(pet);
+        universe.timeMachine();
 
         result.addProperty("htmlPetControlPanel", view.getHtmlControlPanel());
         result.addProperty("htmlPet", view.getHtml());

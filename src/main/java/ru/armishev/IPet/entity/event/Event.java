@@ -11,20 +11,15 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.function.Consumer;
 
+@Service
+@Scope("prototype")
 public abstract class Event implements IEvent {
+    @Autowired
     protected IPet pet;
 
     protected abstract Consumer<IPet> getCons();
 
     protected abstract long getTimeInterval();
-
-    public Event() {
-        this.pet = pet;
-    }
-
-    public void setPet(IPet pet) {
-        this.pet = pet;
-    }
 
     /*
         Время последнего случившегося события
