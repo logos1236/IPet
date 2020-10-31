@@ -1,6 +1,7 @@
 package ru.armishev.IPet;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.armishev.IPet.dao.pet.PetDAO;
 import ru.armishev.IPet.entity.pet.IPet;
 
@@ -49,7 +50,7 @@ public class Pet {
     }
 
     /*
-	ормление восстанавливает уровень сытости
+	Кормление восстанавливает уровень сытости
 	 */
     @Test
     public void eatTest() {

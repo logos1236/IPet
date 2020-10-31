@@ -1,8 +1,10 @@
 package ru.armishev.IPet;
 
 import org.junit.jupiter.api.Test;
+import ru.armishev.IPet.entity.event.Boring;
 import ru.armishev.IPet.entity.event.Escape;
 import ru.armishev.IPet.entity.event.IEvent;
+import ru.armishev.IPet.entity.event.Starvation;
 import ru.armishev.IPet.entity.pet.IPet;
 
 import java.time.Instant;
@@ -26,5 +28,43 @@ public class Event {
 
         event.execute(Instant.now().getEpochSecond()+10);
         assertTrue(test.isEscaped());
+    }
+
+    /*
+    Тест события голода
+     */
+    @Test
+    public void starvingTest() {
+        IPet test = new ru.armishev.IPet.entity.pet.Pet();
+        Starvation event = new Starvation();
+        event.setPet(test);
+
+        int start_satiety = test.getSatiety();
+        for (int i = 0; i < 100; i ++) {
+            event.execute(Instant.now().getEpochSecond()+10*i);
+        }
+
+        int end_satiety = test.getSatiety();
+        assertTrue(start_satiety > end_satiety);
+    }
+
+    /*
+    Тест события скуки
+     */
+    @Test
+    public void boringTest() {
+        IPet test = new ru.armishev.IPet.entity.pet.Pet();
+        Boring event = new Boring();
+        event.setPet(test);
+
+        int start_happiness = test.getHappiness();
+
+        for (int i = 0; i < 100; i ++) {
+            event.execute(Instant.now().getEpochSecond()+10*i);
+        }
+
+        int end_happiness = test.getHappiness();
+
+        assertTrue(start_happiness > end_happiness);
     }
 }

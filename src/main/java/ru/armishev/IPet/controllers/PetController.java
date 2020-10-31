@@ -42,7 +42,7 @@ public class PetController {
             return "redirect:/";
         }
 
-        universe.timeMachine(pet);
+        universe.timeMachine();
 
         IPetView view = new PetView(pet);
         ILogView logView = new LogView(logRepository, pet);
@@ -64,7 +64,7 @@ public class PetController {
         IPetView view = new PetView(pet);
         ILogView logView = new LogView(logRepository, pet);
 
-        universe.timeMachine(pet);
+        universe.timeMachine();
 
         result.addProperty("htmlPetControlPanel", view.getHtmlControlPanel());
         result.addProperty("htmlPet", view.getHtml());
@@ -148,7 +148,7 @@ public class PetController {
         result.addProperty("success", false);
         result.addProperty("error_message", "Непонятная команда");
 
-        universe.timeMachine(pet);
+        universe.timeMachine();
 
         pet.loadFromDAO(pet.getId());
 

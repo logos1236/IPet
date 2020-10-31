@@ -24,6 +24,9 @@ public class Universe implements IUniverse {
     @Autowired
     private EventFactory eventFactory;
 
+    @Autowired
+    IPet pet;
+
     /*
     Список питомцев, которые уже в сесии и обрабатываются
      */
@@ -42,7 +45,7 @@ public class Universe implements IUniverse {
     Эмулируем временной отрезок жизни питомца
     */
     @Override
-    public void timeMachine(IPet pet) {
+    public void timeMachine() {
         long current_time = Instant.now().getEpochSecond();
         if (checkStartTimeMachine(pet)) {
             if (isGenerateDataByEvent(pet)) {
