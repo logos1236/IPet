@@ -39,9 +39,10 @@ public class Boring extends Event  {
     protected LogRepository getLogRepository() {return null;};
 
     private void afterSuccessAction() {
-        //long current_time = Instant.now().getEpochSecond();
         long current_time = System.currentTimeMillis();
-        getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, pet.getName()+" скучает"));
+        if (getLogRepository() != null) {
+            getLogRepository().save(new LogPetActionDAO(pet.getId(), current_time, pet.getName() + " скучает"));
+        }
     }
 
     protected long getEventTimeInterval() {

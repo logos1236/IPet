@@ -21,9 +21,13 @@ public abstract class Event implements IEvent {
     @Autowired
     protected IPet pet;
 
+    public void setPet(IPet pet) {
+        this.pet = pet;
+    }
+
     /*
-    Действия во время события
-     */
+        Действия во время события
+         */
     protected abstract Consumer<IPet> getCons();
 
     /*

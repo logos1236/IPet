@@ -25,6 +25,7 @@ public interface IPet {
 
     void eat(int satiety);
     void starving();
+    void starving(int val);
     void play(int val);
     void play();
     void boring(int val);

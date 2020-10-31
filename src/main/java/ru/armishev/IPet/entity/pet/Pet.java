@@ -29,9 +29,9 @@ public class Pet implements IPet {
     private long id;
     private String name;
     private long birth_date;
-    private int health;
-    private int satiety;
-    private int happiness;
+    private int health = HEALTH_MAX;
+    private int satiety = SATIETY_MAX;
+    private int happiness = HAPPINESS_MAX;
     private long last_visit_time;
     private boolean is_escaped = false;
     private Map<Class<? extends IEvent>, Long> event_time_list = new HashMap<>();
@@ -43,8 +43,6 @@ public class Pet implements IPet {
     public void setEvent_time_list(Class<? extends IEvent> class_name, long time) {
         event_time_list.put(class_name, time);
     }
-
-
 
     public void setName(String name) {
         this.name = name;
@@ -233,6 +231,11 @@ public class Pet implements IPet {
     @Override
     public void starving() {
         decreaseSatiety(SATIETY_DECREASE);
+    }
+
+    @Override
+    public void starving(int val) {
+        decreaseSatiety(val);
     }
 
     @Override

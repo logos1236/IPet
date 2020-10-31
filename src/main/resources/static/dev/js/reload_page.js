@@ -17,5 +17,5 @@ $(document).ready(function () {
             });
     }
 
-    setInterval(replaceMainHtml, 3000);
+    setInterval(replaceMainHtml, 1000);
 });

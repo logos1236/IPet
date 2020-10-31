@@ -1,6 +1,7 @@
 package ru.armishev.IPet;
 
 import org.junit.jupiter.api.Test;
+import ru.armishev.IPet.dao.pet.PetDAO;
 import ru.armishev.IPet.entity.pet.IPet;
 
 import static org.junit.Assert.assertEquals;
@@ -30,6 +31,40 @@ public class Pet {
     }
 
     /*
+	Продолжительный голод уменьшает уровень здоровья
+	 */
+    @Test
+    public void decreaseHealthTest() {
+        IPet test = new ru.armishev.IPet.entity.pet.Pet();
+        int start_health = test.getHeath();
+
+        test.starving(100);
+        test.starving(100);
+        test.starving(100);
+        test.starving(100);
+
+        int end_health = test.getHeath();
+
+        assertTrue(start_health > end_health);
+    }
+
+    /*
+	ормление восстанавливает уровень сытости
+	 */
+    @Test
+    public void eatTest() {
+        IPet test = new ru.armishev.IPet.entity.pet.Pet();
+        test.starving(50);
+        int start_satiety = test.getSatiety();
+
+        test.eat(50);
+
+        int end_satiety = test.getHeath();
+
+        assertTrue(start_satiety < end_satiety);
+    }
+
+    /*
 	Побег
 	 */
     @Test
@@ -49,5 +84,33 @@ public class Pet {
         test.play(100);
 
         assertEquals(test.getSatiety(), 0);
+    }
+
+    /*
+	Игра должна еличивать уровень счастья
+	*/
+    @Test
+    public void playHappyTest() {
+        IPet test = new ru.armishev.IPet.entity.pet.Pet();
+        test.boring();
+
+        int start_happy = test.getHappiness();
+
+        test.play(100);
+
+        int end_happy = test.getHappiness();
+
+
+        assertTrue(start_happy < end_happy);
+    }
+
+    /*
+    Тест конструктора. ID питомец должен получить только из базы
+     */
+    @Test
+    public void constructorTest() {
+        IPet test = new ru.armishev.IPet.entity.pet.Pet();
+
+        assertEquals(test.getId(), 0);
     }
 }
